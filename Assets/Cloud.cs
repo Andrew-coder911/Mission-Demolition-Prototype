@@ -12,7 +12,7 @@ public class Cloud : MonoBehaviour
     public Vector2 sphereScaleRangeX = new Vector2(4,8);
     public Vector2 sphereScaleRangeY = new Vector2 (3, 4);
     public Vector2 sphereScaleRangeZ = new Vector2 (2, 4);
-    public float scaleMin = 2f;
+    public float scaleYMin = 2f;
 
     private List<GameObject> spheres;
 
@@ -38,12 +38,12 @@ public class Cloud : MonoBehaviour
             //Выбрать случайный масштаб
             Vector3 scale = Vector3.one;
             scale.x = Random.Range(sphereScaleRangeX.x, sphereScaleRangeX.y);
-            scale.y = Random.Range(sphereScaleRangeX.x, sphereScaleRangeY.y);
-            scale.z = Random.Range(sphereScaleRangeX.x, sphereScaleRangeY.y);
+            scale.y = Random.Range(sphereScaleRangeY.x, sphereScaleRangeY.y);
+            scale.z = Random.Range(sphereScaleRangeZ.x, sphereScaleRangeZ.y);
 
             //Скорректировать масштаб y по расстоянию х от центра
             scale.y *= 1-(Mathf.Abs(offset.x) / sphereOffsetScale.x);
-            scale.y = Mathf.Max(scale.y, scaleMin);
+            scale.y = Mathf.Max(scale.y, scaleYMin);
 
             spTrans.localScale = scale;
 		}
@@ -52,10 +52,10 @@ public class Cloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown (KeyCode.Space))
-		{
-            Restart();
-		}
+        //if (Input.GetKeyDown (KeyCode.Space))
+		//{
+          //  Restart();
+		//}
     }
 
     void Restart ()
@@ -68,3 +68,4 @@ public class Cloud : MonoBehaviour
         Start();
 	}
 }
+
