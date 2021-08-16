@@ -19,10 +19,34 @@ public class FollowCam : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		if (POI == null) return; // выйти если нет интересующего объекта
+		//if (POI == null) return; // выйти если нет интересующего объекта
 
 		//Получить позицию интересующего объекта
-		Vector3 destination = POI.transform.position;
+		//Vector3 destination = POI.transform.position;
+		Vector3 destination;
+		//Если нет интересующего объекта, вернуть Position [0,0,0]
+		if(POI == null)
+		{
+			destination = Vector3.zero;
+		}
+		else
+		{
+			//Получить позицию интересующего объекта
+			destination = POI.transform.position;
+			//Если интересующий объект - снаряд, убедиться что он остановился
+			if(POI.tag == "Projectile")
+			{
+				//Если он не двигается (снаряд стоит на месте)
+				if (POI.GetComponent<Rigidbody> ().IsSleeping ())
+				{
+					//Вернуть исходные настройки поля зрения камеры
+					POI = null;
+					//в следующем кадре
+					return;
+				}
+			}
+		}
+
 		//Ограничить X и Y минимальными значениями
 		destination.x = Mathf.Max(minXY.x, destination.x);
 		destination.y = Mathf.Max(minXY.y, destination.y);
